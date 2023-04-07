@@ -1,14 +1,12 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState }  from "react";
+import io from "socket.io-client";
+import Router from "./Router";
 
 const App = () => {
-   
-  
+
     return (
-      <div>
-        
-        <h1>hello world</h1>
-  
-      </div>
+      <Router />
+
     );
   };
   
