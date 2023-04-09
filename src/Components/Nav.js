@@ -1,27 +1,37 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 
-const Nav = ({socket}) => {
-    const [Started, setStarted] = useState(false);
-    const [StartBtnText, setStartBtnText] = useState("Start");
+const Nav = ({ socket, started, axis }) => {
 
-    const handleStart = async(e) => {
-        e.preventDefault();
-        if(!Started){
-          socket.emit("start");
-        }
-      }
-  
-    return (
-      <div>
-        
-        <div className="form-group">
-          <button className="btn btn-primary btn-block" onClick={handleStart}>
-            {StartBtnText}
-          </button>
-        </div>
-  
+  const [StartBtnText, setStartBtnText] = useState("Start");
+
+  const handleStart = async (e) => {
+    e.preventDefault();
+    if (!started) {
+      socket.emit("start");
+    }
+  }
+  useEffect(() => {
+    console.log(started);
+    if(started){
+      setStartBtnText("Stop");
+    }
+    else{
+      setStartBtnText("Start");
+    }
+  }, [started]);
+
+  return (
+    <div>
+
+      <div className="form-group">
+        <span>Axis : {axis}</span>
+        <button className="btn btn-primary btn-block" onClick={handleStart}>
+          {StartBtnText}
+        </button>
       </div>
-    );
-  };
-  
-  export default Nav;
+
+    </div>
+  );
+};
+
+export default Nav;
