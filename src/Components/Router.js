@@ -27,19 +27,24 @@ function Router() {
         socket.on("started", (info) => {
             setStarted(true);
             console.log("started ");
+            socket.emit("video")
         });
         socket.on("video", (info) => {
             console.log(info.image)
             setImage(info.image)
+        })
+        socket.on("face_data", (info) =>{
+            console.log("face dir_vector",info.dir_vector)
+            console.log("face loc",info.face_loc)
         })
     }, []);
   
     return (
         <div>
             <Nav socket = {socket}  started = {started} axis = {axis}></Nav>
-            {started &&
+            {/* {started &&
             <ReqTimer socket={socket}></ReqTimer>
-            }
+            } */}
             {started &&
             <Video socket={socket} image = {image} ></Video>
             }
