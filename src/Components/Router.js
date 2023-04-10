@@ -19,9 +19,12 @@ function Router() {
     const [started, setStarted] = useState(false);
     const [axis, setAxis] = useState(4);
     const [image, setImage] = useState("");
+    const [facedircam, setFaceDirCam] = useState([]);
+    const [faceloccam, setFaceLocCam] = useState([]);
 
     useEffect(() => {
         socket.on("connected", (info) => {
+            console.log(info.axis)
             setAxis(Number(info.axis));
         });
         socket.on("started", (info) => {
@@ -33,9 +36,9 @@ function Router() {
             console.log(info.image)
             setImage(info.image)
         })
-        socket.on("face_data", (info) =>{
-            console.log("face dir_vector",info.dir_vector)
-            console.log("face loc",info.face_loc)
+        socket.on("face_from_cam", (info) =>{
+            setFaceDirCam(info.dir_vector);
+            setFaceLocCam(info.face_loc);
         })
     }, []);
   
@@ -46,7 +49,7 @@ function Router() {
             <ReqTimer socket={socket}></ReqTimer>
             } */}
             {started &&
-            <Video socket={socket} image = {image} ></Video>
+            <Video socket={socket} image = {image} dir = {facedircam} loc = {faceloccam}></Video>
             }
             
         </div>
