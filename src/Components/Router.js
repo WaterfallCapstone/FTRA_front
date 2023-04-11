@@ -61,6 +61,7 @@ function Router() {
             {/* {started &&
             <ReqTimer socket={socket}></ReqTimer>
             } */}
+        
             {started &&
             <Video socket={socket} image = {image} isface = {isface} dir = {facedircam} loc = {faceloccam}></Video>
             }
