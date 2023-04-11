@@ -28,6 +28,8 @@ function Router() {
     const [armtip_lp, setALP] = useState([]);
     const [armtip_lc, setALC] = useState([]);
     const [armtip_dp, setADP] = useState([]);
+    const [cam_loc, setCamLoc] = useState([]);
+    const [cam_dir, setCamDir] = useState([]);
 
     useEffect(() => {
         socket.on("connected", (info) => {
@@ -61,6 +63,10 @@ function Router() {
             setALC(info.alc);
             setADP(info.adp);
         })
+        socket.on("camdata", (info) =>{
+            setCamLoc(info.camloc);
+            setCamDir(info.camdir);
+        })
     }, []);
   
     return (
@@ -77,7 +83,7 @@ function Router() {
             <Motor socket={socket} motorvalue = {motorvalue} axis = {axis}></Motor>
             }
             {started &&
-            <MiddleData socket={socket} at_loc_polar = {armtip_lp} at_loc_cart = {armtip_lc} at_dir_polar = {armtip_dp}></MiddleData>
+            <MiddleData socket={socket} at_loc_polar = {armtip_lp} at_loc_cart = {armtip_lc} at_dir_polar = {armtip_dp} cam_loc = {cam_loc} cam_dir ={cam_dir}></MiddleData>
             }
             
         </div>

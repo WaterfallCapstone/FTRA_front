@@ -31,7 +31,7 @@ const Motor = ({socket,  motorvalue, axis}) => {
     <div>
       <div>
         <div>
-          <span>Motor Value (polar) </span>
+          <span>Motor Value (degree) </span>
           <div>{renderMotorValue()}</div>
           <input onChange = {onChangeMotorValue}/>
           <button onClick={Push}>입력</button>

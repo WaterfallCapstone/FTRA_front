@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const MiddleData = ({socket, at_loc_polar , at_loc_cart , at_dir_polar}) => {
+const MiddleData = ({socket, at_loc_polar , at_loc_cart , at_dir_polar, cam_loc, cam_dir}) => {
 
   const renderMotorValue = (data) => {
     const result = [];
@@ -12,16 +12,29 @@ const MiddleData = ({socket, at_loc_polar , at_loc_cart , at_dir_polar}) => {
   return (
     <div>
       <div>
-        <span>armtip location (polar) </span>
+        <span>armtip location (polar)</span>
+        <span>        : </span>
         <span>{renderMotorValue(at_loc_polar)}</span>
       </div>
       <div>
-        <span>armtip location (cart) </span>
+        <span>armtip location (cart)</span>
+        <span>         : </span>
         <span>{renderMotorValue(at_loc_cart)}</span>
       </div>
       <div>
-        <span>armtip direction (polar) </span>
+        <span>armtip direction (polar)</span>
+        <span>       : </span>
         <span>{renderMotorValue(at_dir_polar)}</span>
+      </div>
+      <div>
+        <span>camera location (cart)</span>
+        <span>         : </span>
+        <span>{renderMotorValue(cam_loc)}</span>
+      </div>
+      <div>
+        <span>camera direction (polar)</span>
+        <span>       : </span>
+        <span>{renderMotorValue(cam_dir)}</span>
       </div>
     </div>
   );
