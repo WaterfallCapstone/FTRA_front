@@ -35,7 +35,7 @@ function Router() {
             
             if(info.stat){
                 console.log("Started")
-                socket.emit("video")
+                socket.emit("mainprocess")
             }
             
         });
