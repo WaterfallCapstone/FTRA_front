@@ -8,7 +8,13 @@ const Motor = ({socket,  motorvalue, axis}) => {
     const inputMotorValue = e.target.value;
     setInputmotor(inputMotorValue);
   };
-
+  const renderMotorValue = () => {
+    const result = [];
+    for (let i = 0; i < motorvalue.length; i++) {
+      result.push(<span key={i}>{Number(motorvalue[i]).toFixed(3) + " , "}</span>);
+    }
+    return result;
+  };
   const Push = () => {
     socket.emit("setmotorclient", {"data": inputmotor});
     // console.log(motorBtnText);
@@ -25,8 +31,8 @@ const Motor = ({socket,  motorvalue, axis}) => {
     <div>
       <div>
         <div>
-          <span>Motor Value (polar)</span>
-          <span>{arr2}</span>
+          <span>Motor Value (polar) </span>
+          <div>{renderMotorValue()}</div>
           <input onChange = {onChangeMotorValue}/>
           <button onClick={Push}>입력</button>
       </div>

@@ -15,7 +15,7 @@ const Video = ({socket, image,isface, dir,loc}) => {
       </div>
       <div>
         <div>
-          <span>face location from camera (polar)</span>
+          <span>face location from camera (polar) </span>
           {isface ?
           <span>({Number(loc[0]).toFixed(3)}, {Number(loc[1]).toFixed(3)}, {Number(loc[2]).toFixed(3)})</span>
           : <span>No Face</span>
