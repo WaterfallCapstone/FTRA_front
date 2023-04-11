@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Motor = ({socket,  motorvalue, axis}) => {
+const Motor = ({socket,  motorvalue, axis,mode}) => {
   const arr2 = motorvalue.join(', ');
 
   const [inputmotor, setInputmotor] = useState("");
@@ -29,13 +29,15 @@ const Motor = ({socket,  motorvalue, axis}) => {
   
   return (
     <div>
+      <span>Motor Value (degree) </span>
+      <div>{renderMotorValue()}</div>
       <div>
-        <div>
-          <span>Motor Value (degree) </span>
-          <div>{renderMotorValue()}</div>
-          <input onChange = {onChangeMotorValue}/>
-          <button onClick={Push}>입력</button>
-      </div>
+        {mode == "control" &&
+          <div>
+            <input onChange={onChangeMotorValue} />
+            <button onClick={Push}>입력</button>
+          </div>
+        }
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Nav = ({ socket, started, axis }) => {
+const Nav = ({ socket, started, axis, mode }) => {
 
   const [StartBtnText, setStartBtnText] = useState("Start");
 
@@ -12,6 +12,10 @@ const Nav = ({ socket, started, axis }) => {
       socket.emit("stop");
     }
   }
+  const onchange = () => {
+    socket.emit("changemod")
+  }
+
   useEffect(() => {
     console.log(started);
     if(started){
@@ -30,6 +34,17 @@ const Nav = ({ socket, started, axis }) => {
         <button className="btn btn-primary btn-block" onClick={handleStart}>
           {StartBtnText}
         </button>
+      </div>
+
+      <div>
+        {(started) &&
+          <div>
+            <span>mode : {mode}</span>
+            <button className="btn btn-primary btn-block" onClick={onchange}>
+              change
+            </button>
+          </div>
+        }
       </div>
 
     </div>

@@ -30,6 +30,7 @@ function Router() {
     const [armtip_dp, setADP] = useState([]);
     const [cam_loc, setCamLoc] = useState([]);
     const [cam_dir, setCamDir] = useState([]);
+    const [mode, setMode] = useState(["control"]);
 
     useEffect(() => {
         socket.on("connected", (info) => {
@@ -38,12 +39,13 @@ function Router() {
         });
         socket.on("mainprocess", (info) => {
             setStarted(info.stat);
-            
             if(info.stat){
                 console.log("Started")
                 socket.emit("mainprocess")
             }
-            
+        });
+        socket.on("mode", (info) => {
+            setMode(info.mode);
         });
         socket.on("video", (info) => {
             // console.log(info.image)
@@ -71,7 +73,7 @@ function Router() {
   
     return (
         <div>
-            <Nav socket = {socket}  started = {started} axis = {axis}></Nav>
+            <Nav socket = {socket}  started = {started} axis = {axis} mode = {mode}></Nav>
             {/* {started &&
             <ReqTimer socket={socket}></ReqTimer>
             } */}
@@ -80,7 +82,7 @@ function Router() {
             <Video socket={socket} image = {image} isface = {isface} dir = {facedircam} loc = {faceloccam}></Video>
             }
             {started &&
-            <Motor socket={socket} motorvalue = {motorvalue} axis = {axis}></Motor>
+            <Motor socket={socket} motorvalue = {motorvalue} axis = {axis} mode = {mode}></Motor>
             }
             {started &&
             <MiddleData socket={socket} at_loc_polar = {armtip_lp} at_loc_cart = {armtip_lc} at_dir_polar = {armtip_dp} cam_loc = {cam_loc} cam_dir ={cam_dir}></MiddleData>
