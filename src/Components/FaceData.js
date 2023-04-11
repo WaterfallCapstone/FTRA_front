@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const FaceData = ({socket,isface, face_loc,face_lookat}) => {
+const FaceData = ({socket,isface, face_loc,face_lookat, arm_dest}) => {
 
   const renderMotorValue = (data) => {
     const result = [];
@@ -20,6 +20,10 @@ const FaceData = ({socket,isface, face_loc,face_lookat}) => {
             <div>
                 <span>face lookat (cart)         : </span>
                 <span>{renderMotorValue(face_lookat)}</span>
+            </div>
+            <div>
+                <span>arm_destination (cart)         : </span>
+                <span>{renderMotorValue(arm_dest)}</span>
             </div>
         </div>
         :
