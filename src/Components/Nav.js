@@ -8,6 +8,8 @@ const Nav = ({ socket, started, axis }) => {
     e.preventDefault();
     if (!started) {
       socket.emit("start");
+    }else{
+      socket.emit("stop");
     }
   }
   useEffect(() => {

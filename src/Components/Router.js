@@ -27,10 +27,14 @@ function Router() {
             console.log(info.axis)
             setAxis(Number(info.axis));
         });
-        socket.on("started", (info) => {
-            setStarted(true);
-            console.log("started ");
-            socket.emit("video")
+        socket.on("mainprocess", (info) => {
+            setStarted(info.stat);
+            
+            if(info.stat){
+                console.log("Started")
+                socket.emit("video")
+            }
+            
         });
         socket.on("video", (info) => {
             console.log(info.image)
