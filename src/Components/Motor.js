@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Motor = ({socket, image,dir,loc}) => {
+const Motor = ({socket,  motorvalue}) => {
     // const [loop, setLoop] = useState({});
 
     // useEffect(() => {
@@ -12,12 +12,8 @@ const Motor = ({socket, image,dir,loc}) => {
     <div>
       <div>
         <div>
-          <span>face location from camera (polar)</span>
-          <span>({Number(loc[0]).toFixed(3)}, {Number(loc[1]).toFixed(3)}, {Number(loc[2]).toFixed(3)})</span>
-        </div>
-        <div>
-          <span>face dir vector from camera (cart)</span>
-          <span>({Number(dir[0]).toFixed(3)}, {Number(dir[1]).toFixed(3)}, {Number(dir[2]).toFixed(3)})</span>
+          <span>Motor Value (polar)</span>
+          <span>({Number(motorvalue[0]).toFixed(3)}, {Number(motorvalue[1]).toFixed(3)}, {Number(motorvalue[2]).toFixed(3)}, {Number(motorvalue[3]).toFixed(3)}, {Number(motorvalue[4]).toFixed(3)})</span>
         </div>
       </div>
     </div>
