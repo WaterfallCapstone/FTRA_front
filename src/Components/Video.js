@@ -11,7 +11,7 @@ const Video = ({socket, image,isface, dir,loc}) => {
   return (
     <div>
       <div>
-        <img src = {image} alt="no img"/>
+        <img src = {image} alt="no img" height="360" width="480"/>
       </div>
       <div>
         <div>
