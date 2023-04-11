@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-const Motor = ({socket,  motorvalue}) => {
+const Motor = ({socket,  motorvalue, axis}) => {
+  const arr2 = motorvalue.join(', ');
+
+  const [inputmotor, setInputmotor] = useState("");
+  const onChangeMotorValue = (e) => {
+    const inputMotorValue = e.target.value;
+    setInputmotor(inputMotorValue);
+  };
+
+  const Push = () => {
+    socket.emit("setmotorclient", {"data": inputmotor});
+    // console.log(motorBtnText);
+  }
+
     // const [loop, setLoop] = useState({});
 
     // useEffect(() => {
@@ -13,8 +26,10 @@ const Motor = ({socket,  motorvalue}) => {
       <div>
         <div>
           <span>Motor Value (polar)</span>
-          <span>({Number(motorvalue[0]).toFixed(3)}, {Number(motorvalue[1]).toFixed(3)}, {Number(motorvalue[2]).toFixed(3)}, {Number(motorvalue[3]).toFixed(3)}, {Number(motorvalue[4]).toFixed(3)})</span>
-        </div>
+          <span>{arr2}</span>
+          <input onChange = {onChangeMotorValue}/>
+          <button onClick={Push}>입력</button>
+      </div>
       </div>
     </div>
   );

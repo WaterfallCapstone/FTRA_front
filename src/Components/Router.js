@@ -66,7 +66,7 @@ function Router() {
             <Video socket={socket} image = {image} isface = {isface} dir = {facedircam} loc = {faceloccam}></Video>
             }
             {started &&
-            <Motor socket={socket} motorvalue = {motorvalue} ></Motor>
+            <Motor socket={socket} motorvalue = {motorvalue} axis = {axis}></Motor>
             }
             
         </div>
