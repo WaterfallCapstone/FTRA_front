@@ -35,6 +35,7 @@ function Router() {
     const [face_loc, setFaceLoc] = useState([]);
     const [face_lookat, setLookAt] = useState([]);
     const [arm_dest, setArmDest] = useState([]);
+    const [motor_dest, setMotorDest] = useState([]);
 
     useEffect(() => {
         socket.on("connected", (info) => {
@@ -80,6 +81,9 @@ function Router() {
         socket.on("arm_dest", (info) =>{
             setArmDest(info.arm_dest);
         })
+        socket.on("motor_dest", (info) =>{
+            setMotorDest(info.motor_dest);
+        })
     }, []);
   
     return (
@@ -99,7 +103,7 @@ function Router() {
             <MiddleData socket={socket} at_loc_polar = {armtip_lp} at_loc_cart = {armtip_lc} at_dir_polar = {armtip_dp} cam_loc = {cam_loc} cam_dir ={cam_dir}></MiddleData>
             }
             {started &&
-            <FaceData socket = {socket} isface = {isface} face_loc = {face_loc} face_lookat = {face_lookat} arm_dest = {arm_dest}></FaceData>
+            <FaceData socket = {socket} isface = {isface} face_loc = {face_loc} face_lookat = {face_lookat} arm_dest = {arm_dest} motor_dest = {motor_dest}></FaceData>
             }
             
         </div>
