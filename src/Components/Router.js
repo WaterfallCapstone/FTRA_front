@@ -8,6 +8,7 @@ import { API_URL } from "../_variables";
 import Video from "./Video";
 import ReqTimer from "./ReqTimer";
 import Motor from "./Motor";
+import MiddleData from "./MiddleData";
 
 const socket = io.connect(API_URL,{
     cors: { origin: '*' }
@@ -24,6 +25,9 @@ function Router() {
     const [facedircam, setFaceDirCam] = useState([]);
     const [faceloccam, setFaceLocCam] = useState([]);
     const [motorvalue, setMotorValue] = useState([]);
+    const [armtip_lp, setALP] = useState([]);
+    const [armtip_lc, setALC] = useState([]);
+    const [armtip_dp, setADP] = useState([]);
 
     useEffect(() => {
         socket.on("connected", (info) => {
@@ -49,9 +53,13 @@ function Router() {
             setFaceLocCam(info.face_loc);
         })
         socket.on("motor", (info) =>{
-            console.log("here")
             console.log(info.motorvalue)
             setMotorValue(info.motorvalue);
+        })
+        socket.on("armtip", (info) =>{
+            setALP(info.alp);
+            setALC(info.alc);
+            setADP(info.adp);
         })
     }, []);
   
@@ -67,6 +75,9 @@ function Router() {
             }
             {started &&
             <Motor socket={socket} motorvalue = {motorvalue} axis = {axis}></Motor>
+            }
+            {started &&
+            <MiddleData socket={socket} at_loc_polar = {armtip_lp} at_loc_cart = {armtip_lc} at_dir_polar = {armtip_dp}></MiddleData>
             }
             
         </div>
