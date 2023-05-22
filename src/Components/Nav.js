@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Nav = ({ socket, started, axis, mode }) => {
-
+const Nav = ({ socket, camerasocket, started, mode }) => {
+  const navigate = useNavigate();
   const [StartBtnText, setStartBtnText] = useState("Start");
 
   const handleStart = async (e) => {
@@ -14,6 +15,11 @@ const Nav = ({ socket, started, axis, mode }) => {
   }
   const onchange = () => {
     socket.emit("changemod")
+  }
+
+  const cameraEnv = () => {
+    navigate("/cameraenv");
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -29,19 +35,21 @@ const Nav = ({ socket, started, axis, mode }) => {
   return (
     <div>
 
-      <div className="form-group">
-        <span>Axis : {axis}</span>
-        <button className="btn btn-primary btn-block" onClick={handleStart}>
-          {StartBtnText}
-        </button>
-      </div>
-
       <div>
         {(started) &&
           <div>
             <span>mode : {mode}</span>
             <button className="btn btn-primary btn-block" onClick={onchange}>
               change
+            </button>
+          </div>
+        }
+      </div>
+      <div>
+        {(!started) &&
+          <div>
+            <button onClick={cameraEnv}>
+              CamEnv
             </button>
           </div>
         }

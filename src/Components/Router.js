@@ -5,95 +5,109 @@ import Nav from "./Nav";
 
 
 import { API_URL } from "../_variables";
+import Home from "./Home";
 import Video from "./Video";
 import ReqTimer from "./ReqTimer";
 import Motor from "./Motor";
 import MiddleData from "./MiddleData";
 import FaceData from "./FaceData";
+import CameraEnv from "./CameraEnv";
 
 const socket = io.connect(API_URL,{
     cors: { origin: '*' }
 });
+
+const camerasocket = io.connect("http://localhost:5000/controller", {
+        cors: { origin: '*' }
+    }
+);
+
 
 function Router() {
     const navigate = useNavigate();
     const location = useLocation();
 
     const [started, setStarted] = useState(false);
-    const [axis, setAxis] = useState(4);
-    const [image, setImage] = useState("");
-    const [isface, setIsFace] = useState(false);
-    const [facedircam, setFaceDirCam] = useState([]);
-    const [faceloccam, setFaceLocCam] = useState([]);
-    const [motorvalue, setMotorValue] = useState([]);
-    const [armtip_lp, setALP] = useState([]);
-    const [armtip_lc, setALC] = useState([]);
-    const [armtip_dp, setADP] = useState([]);
-    const [cam_loc, setCamLoc] = useState([]);
-    const [cam_dir, setCamDir] = useState([]);
     const [mode, setMode] = useState("control");
-    const [face_loc, setFaceLoc] = useState([]);
-    const [face_lookat, setLookAt] = useState([]);
-    const [arm_dest, setArmDest] = useState([]);
-    const [motor_dest, setMotorDest] = useState([]);
 
-    useEffect(() => {
-        socket.on("connected", (info) => {
-            console.log(info.axis)
-            setAxis(Number(info.axis));
-        });
-        socket.on("mainprocess", (info) => {
-            setStarted(info.stat);
-            if(info.stat){
-                console.log("Started")
-                socket.emit("mainprocess")
-            }
-        });
-        socket.on("mode", (info) => {
-            setMode(info.mode);
-        });
-        socket.on("video", (info) => {
-            // console.log(info.image)
-            setImage(info.image)
-            setIsFace(info.isface)
-        })
-        socket.on("face_from_cam", (info) =>{
-            setFaceDirCam(info.dir_vector);
-            setFaceLocCam(info.face_loc);
-        })
-        socket.on("motor", (info) =>{
-            console.log(info.motorvalue)
-            setMotorValue(info.motorvalue);
-        })
-        socket.on("armtip", (info) =>{
-            setALP(info.alp);
-            setALC(info.alc);
-            setADP(info.adp);
-        })
-        socket.on("camdata", (info) =>{
-            setCamLoc(info.camloc);
-            setCamDir(info.camdir);
-        })
-        socket.on("face_location", (info) =>{
-            setFaceLoc(info.faceloc);
-            setLookAt(info.lookat);
-        })
-        socket.on("arm_dest", (info) =>{
-            setArmDest(info.arm_dest);
-        })
-        socket.on("motor_dest", (info) =>{
-            setMotorDest(info.motor_dest);
-        })
-    }, []);
+    // const [image, setImage] = useState("");
+    // const [isface, setIsFace] = useState(false);
+    // const [facedircam, setFaceDirCam] = useState([]);
+    // const [faceloccam, setFaceLocCam] = useState([]);
+    // const [motorvalue, setMotorValue] = useState([]);
+    // const [armtip_lp, setALP] = useState([]);
+    // const [armtip_lc, setALC] = useState([]);
+    // const [armtip_dp, setADP] = useState([]);
+    // const [cam_loc, setCamLoc] = useState([]);
+    // const [cam_dir, setCamDir] = useState([]);
+    
+    // const [face_loc, setFaceLoc] = useState([]);
+    // const [face_lookat, setLookAt] = useState([]);
+    // const [arm_dest, setArmDest] = useState([]);
+    // const [motor_dest, setMotorDest] = useState([]);
+
+    // useEffect(() => {
+    //     socket.on("connected", (info) => {
+    //         console.log(info.axis)
+    //         setAxis(Number(info.axis));
+    //     });
+    //     socket.on("mainprocess", (info) => {
+    //         setStarted(info.stat);
+    //         if(info.stat){
+    //             console.log("Started")
+    //             socket.emit("mainprocess")
+    //         }
+    //     });
+    //     socket.on("mode", (info) => {
+    //         setMode(info.mode);
+    //     });
+    //     socket.on("video", (info) => {
+    //         // console.log(info.image)
+    //         setImage(info.image)
+    //         setIsFace(info.isface)
+    //     })
+    //     socket.on("face_from_cam", (info) =>{
+    //         setFaceDirCam(info.dir_vector);
+    //         setFaceLocCam(info.face_loc);
+    //     })
+    //     socket.on("motor", (info) =>{
+    //         console.log(info.motorvalue)
+    //         setMotorValue(info.motorvalue);
+    //     })
+    //     socket.on("armtip", (info) =>{
+    //         setALP(info.alp);
+    //         setALC(info.alc);
+    //         setADP(info.adp);
+    //     })
+    //     socket.on("camdata", (info) =>{
+    //         setCamLoc(info.camloc);
+    //         setCamDir(info.camdir);
+    //     })
+    //     socket.on("face_location", (info) =>{
+    //         setFaceLoc(info.faceloc);
+    //         setLookAt(info.lookat);
+    //     })
+    //     socket.on("arm_dest", (info) =>{
+    //         setArmDest(info.arm_dest);
+    //     })
+    //     socket.on("motor_dest", (info) =>{
+    //         setMotorDest(info.motor_dest);
+    //     })
+    // }, []);
   
     return (
         <div>
-            <Nav socket = {socket}  started = {started} axis = {axis} mode = {mode}></Nav>
+            <Nav socket = {socket}  started = {started}  mode = {mode}></Nav>
+            <Routes>
+                <Route path="/*" element={<Home/>} />
+                <Route path="/cameraenv" element={<CameraEnv camerasocket = {camerasocket}/>} />
+                <Route from="*" to="/" />
+            </Routes>
             {/* {started &&
             <ReqTimer socket={socket}></ReqTimer>
             } */}
         
-            {started &&
+            {/* {started &&
             <Video socket={socket} image = {image} isface = {isface} dir = {facedircam} loc = {faceloccam}></Video>
             }
             {started &&
@@ -104,7 +118,7 @@ function Router() {
             }
             {started &&
             <FaceData socket = {socket} isface = {isface} face_loc = {face_loc} face_lookat = {face_lookat} arm_dest = {arm_dest} motor_dest = {motor_dest}></FaceData>
-            }
+            } */}
             
         </div>
         
