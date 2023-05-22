@@ -11,9 +11,15 @@ import Motor from "./Motor";
 import MiddleData from "./MiddleData";
 import FaceData from "./FaceData";
 
-const socket = io.connect(API_URL,{
+// const api_url_cam = process.env.API_URL_CAM;
+const api_url_cam = "http://localhost:5000/controller"
+
+const camsocket = io.connect(api_url_cam, {
     cors: { origin: '*' }
 });
+// const socket = io.connect(API_URL, {
+//     cors: { origin: '*' }
+// });
 
 function Router() {
     const navigate = useNavigate();
