@@ -70,6 +70,9 @@ const CameraEnv = ({ camerasocket }) => {
         }else{
             if(isOpen){
                 camerasocket.emit("start");
+                if(isfacemesh){
+                    camerasocket.emit("startmesh")
+                }
                 camerasocket.emit("getimg");
                 setIsTest(true)
             }
