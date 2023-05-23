@@ -97,9 +97,9 @@ function Router() {
   
     return (
         <div>
-            <Nav socket = {socket}  started = {started}  mode = {mode}></Nav>
+            <Nav started = {started} ></Nav>
             <Routes>
-                <Route path="/*" element={<Home/>} />
+                <Route path="/*" element={<Home socket = {socket}  started = {started}  mode = {mode}/>} />
                 <Route path="/cameraenv" element={<CameraEnv camerasocket = {camerasocket}/>} />
                 <Route from="*" to="/" />
             </Routes>

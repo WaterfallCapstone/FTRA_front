@@ -21,6 +21,10 @@ const Nav = ({ socket, camerasocket, started, mode }) => {
     navigate("/cameraenv");
     window.location.reload();
   }
+  const home = () => {
+    navigate("/");
+    window.location.reload();
+  }
 
   useEffect(() => {
     console.log(started);
@@ -34,7 +38,21 @@ const Nav = ({ socket, camerasocket, started, mode }) => {
 
   return (
     <div>
+      <div>
+        <button onClick={home}>
+          Home
+        </button>
+      </div>
 
+      <div>
+        {(!started) &&
+          <div>
+            <button onClick={cameraEnv}>
+              CamEnv
+            </button>
+          </div>
+        }
+      </div>
       <div>
         {(started) &&
           <div>
@@ -45,16 +63,6 @@ const Nav = ({ socket, camerasocket, started, mode }) => {
           </div>
         }
       </div>
-      <div>
-        {(!started) &&
-          <div>
-            <button onClick={cameraEnv}>
-              CamEnv
-            </button>
-          </div>
-        }
-      </div>
-
     </div>
   );
 };
