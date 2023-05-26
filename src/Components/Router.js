@@ -11,16 +11,13 @@ import ReqTimer from "./ReqTimer";
 import Motor from "./Motor";
 import MiddleData from "./MiddleData";
 import FaceData from "./FaceData";
-import CameraEnv from "./CameraEnv";
+import Env from "./Env";
 
 const socket = io.connect(API_URL,{
     cors: { origin: '*' }
 });
 
-const camerasocket = io.connect("http://localhost:5000/controller", {
-        cors: { origin: '*' }
-    }
-);
+
 
 
 function Router() {
@@ -100,7 +97,7 @@ function Router() {
             <Nav started = {started} ></Nav>
             <Routes>
                 <Route path="/*" element={<Home socket = {socket}  started = {started}  mode = {mode}/>} />
-                <Route path="/cameraenv" element={<CameraEnv camerasocket = {camerasocket}/>} />
+                <Route path="/env" element={<Env socket = {socket}/>} />
                 <Route from="*" to="/" />
             </Routes>
             {/* {started &&

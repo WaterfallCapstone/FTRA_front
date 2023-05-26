@@ -5,8 +5,8 @@ const Nav = ({started }) => {
   const navigate = useNavigate();
   
 
-  const cameraEnv = () => {
-    navigate("/cameraenv");
+  const envconfig = () => {
+    navigate("/env");
     window.location.reload();
   }
   const home = () => {
@@ -14,15 +14,15 @@ const Nav = ({started }) => {
     window.location.reload();
   }
 
-  useEffect(() => {
-    console.log(started);
-    if(started){
-      setStartBtnText("Stop");
-    }
-    else{
-      setStartBtnText("Start");
-    }
-  }, [started]);
+  // useEffect(() => {
+  //   console.log(started);
+  //   if(started){
+  //     setStartBtnText("Stop");
+  //   }
+  //   else{
+  //     setStartBtnText("Start");
+  //   }
+  // }, [started]);
 
   return (
     <div>
@@ -35,8 +35,8 @@ const Nav = ({started }) => {
       <div>
         {(!started) &&
           <div>
-            <button onClick={cameraEnv}>
-              CamEnv
+            <button onClick={envconfig}>
+              Env
             </button>
           </div>
         }
