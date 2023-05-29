@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-const Video = ({socket, image,isface, dir,loc}) => {
-    // const [loop, setLoop] = useState({});
+// const Video = ({socket, image,isface, dir,loc}) => {
+const Video = ({ socket }) => {
+  const [image, setImage] = useState("")
+  // const [loop, setLoop] = useState({});
 
-    // useEffect(() => {
-    //     setLoop({})
-    //     socket.emit("video");
-    //   }, [loop]);
-  
+  // useEffect(() => {
+  //     setLoop({})
+  //     socket.emit("video");
+  //   }, [loop]);
+  useEffect(() => {
+    socket.on("video", (info) => {
+      setImage(info.image)
+    });
+  }, [])
+
+  const takePicture = (key) => {
+    socket.emit("takepicture", { "key" : key });
+  }
+
   return (
     <div>
       <div>
-        <img src = {image} alt="no img" height="360" width="480"/>
+        <img src={image} alt="no img" height="360" width="480" />
       </div>
-      <div>
+      <button onClick={() => takePicture("Normal")}>Take Picture</button>
+      <button onClick={() => takePicture("RMBG")}>Take Picture remove bg</button>
+      <button onClick={() => takePicture("Chroma")}>Take Picture set Chroma Key</button>
+      {/* <div>
         <div>
           <span>face location from camera (polar) </span>
           {isface ?
@@ -28,10 +42,9 @@ const Video = ({socket, image,isface, dir,loc}) => {
           : <span>No Face</span>
           }
           
-        </div>
-      </div>
-
+        </div> */}
     </div>
+
   );
 };
 

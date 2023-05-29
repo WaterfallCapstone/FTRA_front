@@ -1,26 +1,48 @@
 
 import React, { useState, useEffect } from "react";
+import Video from "./Video";
 
-const Home = ({socket, started, mode}) => {
+const Home = ({ socket, mode }) => {
   const [StartBtnText, setStartBtnText] = useState("Start");
+  const [ErrMsg, setErrMsg] = useState("");
+  const [started, setstarted] = useState(false);
 
   const handleStart = async (e) => {
     e.preventDefault();
     if (!started) {
       socket.emit("start");
-    }else{
+    } else {
       socket.emit("stop");
+      setstarted(false)
     }
   }
   const onchange = () => {
     socket.emit("changemod")
   }
+
+  useEffect(() => {
+    socket.on("startinfo", (info) => {
+      console.log(info)
+      setErrMsg(info.errmsg)
+      if (info.camera) {
+        socket.emit("startcam")
+        socket.emit("startmesh")
+        socket.emit("getimg", { "from": "video" });
+      }
+      if (info.motor) {
+        socket.emit("motortrack")
+      }
+      setstarted(true)
+    });
+
+  }, []);
+
   useEffect(() => {
     console.log(started);
-    if(started){
+    if (started) {
       setStartBtnText("Stop");
     }
-    else{
+    else {
       setStartBtnText("Start");
     }
   }, [started]);
@@ -32,6 +54,7 @@ const Home = ({socket, started, mode}) => {
         <button onClick={handleStart}>
           {StartBtnText}
         </button>
+        <span> {ErrMsg} </span>
       </div>
       <div>
         {(started) &&
@@ -40,7 +63,11 @@ const Home = ({socket, started, mode}) => {
             <button className="btn btn-primary btn-block" onClick={onchange}>
               change
             </button>
+            <div>
+              <Video socket={socket}/>
+            </div>
           </div>
+
         }
       </div>
     </div>

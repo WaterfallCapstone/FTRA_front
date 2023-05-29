@@ -23,8 +23,6 @@ const socket = io.connect(API_URL,{
 function Router() {
     const navigate = useNavigate();
     const location = useLocation();
-
-    const [started, setStarted] = useState(false);
     const [mode, setMode] = useState("control");
 
     // const [image, setImage] = useState("");
@@ -94,9 +92,9 @@ function Router() {
   
     return (
         <div>
-            <Nav started = {started} ></Nav>
+            <Nav ></Nav>
             <Routes>
-                <Route path="/*" element={<Home socket = {socket}  started = {started}  mode = {mode}/>} />
+                <Route path="/*" element={<Home socket = {socket}  mode = {mode}/>} />
                 <Route path="/env" element={<Env socket = {socket}/>} />
                 <Route from="*" to="/" />
             </Routes>

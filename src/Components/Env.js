@@ -34,7 +34,7 @@ const Env = ({ socket }) => {
             setPortList(info.portlist)
             setIsArduino(info.isarduino)
         });
-        socket.on("video", (info) => {
+        socket.on("videoenv", (info) => {
             setImage(info.image)
         });
     }, []);
@@ -74,7 +74,8 @@ const Env = ({ socket }) => {
             if(isfacemesh){
                 result = false
             }
-            socket.emit("setconfig", { "isfacemesh" : result });
+            console.log(result)
+            socket.emit("setconfig", { "facemesh" : result });
         }
         else if(key === "arduinoport"){
             socket.emit("setconfig", { "arduinoport" : arduinoporttmp });
@@ -96,7 +97,7 @@ const Env = ({ socket }) => {
                 if(isfacemesh){
                     socket.emit("startmesh")
                 }
-                socket.emit("getimg");
+                socket.emit("getimg", {"from" : "videoenv"});
                 setIsTest(true)
             }
         }
@@ -142,7 +143,7 @@ const Env = ({ socket }) => {
 
             </div>
 
-            <h2>MotorEnv</h2>
+            <h1>MotorEnv</h1>
             <div>
                 <span>arduinoport : </span>
                 <span>{arduinoport}  </span>
